@@ -1,4 +1,7 @@
 package com.apa.university_api.repository;
 
-public interface ITeacherRepository {
+import com.apa.university_api.model.Teacher;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ITeacherRepository extends JpaRepository<Teacher, String> {
 }
