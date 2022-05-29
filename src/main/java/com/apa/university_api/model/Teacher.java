@@ -1,5 +1,6 @@
 package com.apa.university_api.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -8,9 +9,13 @@ import java.util.List;
 @Entity
 public class Teacher {
     @Id
+    @Column(unique = true, nullable = false)
     private String personalNumber;
+    @Column(unique = false, nullable = false)
     private String firstName;
+    @Column(unique = false, nullable = false)
     private String lastName;
+    @Column(unique = true, nullable = false, length = 10)
     private String nationalCode;
     @OneToMany
     private List<Lesson> lessons;

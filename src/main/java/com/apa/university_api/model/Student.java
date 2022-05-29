@@ -8,8 +8,11 @@ public class Student {
     @Id
     @Column(unique = true, nullable = false, length = 7)
     private String studentNumber;
+    @Column(unique = false, nullable = false)
     private String firstName;
+    @Column(unique = false, nullable = false)
     private String lastName;
+    @Column(unique = true, nullable = false, length = 10)
     private String nationalCode;
     @ManyToMany
     @JoinTable(name = "student_lessons", joinColumns = @JoinColumn(name = "lesson_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
