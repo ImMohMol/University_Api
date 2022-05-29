@@ -1,11 +1,19 @@
 package com.apa.university_api.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Faculty {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    @OneToMany
     private List<Teacher> teachers;
+    @OneToMany
     private List<Student> students;
+    @OneToMany
     private List<Lesson> lessons;
 
     public Faculty() {

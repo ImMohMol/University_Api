@@ -10,6 +10,7 @@ public class Lesson {
     private Long id;
     private String name;
     private Integer grade;
+    @ManyToOne
     private Teacher teacher;
     @ManyToMany(mappedBy = "lessons")
     private List<Student> students;
