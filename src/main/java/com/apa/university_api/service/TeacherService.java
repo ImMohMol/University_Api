@@ -24,4 +24,9 @@ public class TeacherService {
         Teacher savedTeacher = this.teacherRepository.save(teacher);
         return new Response(200, "Teacher added successfully!", savedTeacher);
     }
+
+    public Teacher get(String personalNumber) {
+        Optional<Teacher> teacher = this.teacherRepository.findById(personalNumber);
+        return teacher.orElse(null);
+    }
 }
