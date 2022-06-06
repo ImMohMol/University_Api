@@ -2,6 +2,7 @@ package com.apa.university_api.controller;
 
 import com.apa.university_api.model.Response;
 import com.apa.university_api.model.Student;
+import com.apa.university_api.model.dto.SelectLessonDto;
 import com.apa.university_api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,14 @@ public class StudentController {
     @PostMapping("/add")
     public ResponseEntity<Response> add(@RequestBody Student student) {
         Response result = this.studentService.add(student);
+        if (result.getResultCode() == 200)
+            return ResponseEntity.ok(result);
+        return ResponseEntity.badRequest().body(result);
+    }
+
+    @PostMapping("/lesson/add")
+    public ResponseEntity<Response> addLesson(@RequestBody SelectLessonDto selectLessonDto) {
+        Response result = this.studentService.addLesson(selectLessonDto);
         if (result.getResultCode() == 200)
             return ResponseEntity.ok(result);
         return ResponseEntity.badRequest().body(result);

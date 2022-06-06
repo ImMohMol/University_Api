@@ -1,5 +1,7 @@
 package com.apa.university_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class Student {
     private String lastName;
     @Column(unique = true, nullable = false, length = 10)
     private String nationalCode;
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "student_lessons", joinColumns = @JoinColumn(name = "lesson_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Lesson> lessons;

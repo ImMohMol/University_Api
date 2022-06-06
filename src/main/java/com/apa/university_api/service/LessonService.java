@@ -32,4 +32,9 @@ public class LessonService {
         Lesson savedLesson = this.lessonRepository.save(savingLesson);
         return new Response(200, "Lesson added successfully!", savedLesson);
     }
+
+    public Lesson get(Long id) {
+        Optional<Lesson> lesson = this.lessonRepository.findById(id);
+        return lesson.orElse(null);
+    }
 }
