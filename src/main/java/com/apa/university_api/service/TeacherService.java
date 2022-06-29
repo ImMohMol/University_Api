@@ -29,4 +29,11 @@ public class TeacherService {
         Optional<Teacher> teacher = this.teacherRepository.findById(personalNumber);
         return teacher.orElse(null);
     }
+
+    public Response getStudents(String teacherPersonalNumber) {
+        Optional<Teacher> teacher = this.teacherRepository.findById(teacherPersonalNumber);
+        if (teacher.isEmpty())
+            return new Response(400, "The teacher does not exists!", null);
+        return new Response(200, "Success!", teacher.get().getStudents());
+    }
 }
