@@ -10,9 +10,9 @@ public class Student {
     @Id
     @Column(unique = true, nullable = false, length = 7)
     private String studentNumber;
-    @Column(unique = false, nullable = false)
+    @Column(nullable = false)
     private String firstName;
-    @Column(unique = false, nullable = false)
+    @Column(nullable = false)
     private String lastName;
     @Column(unique = true, nullable = false, length = 10)
     private String nationalCode;
@@ -22,14 +22,6 @@ public class Student {
     private List<Lesson> lessons;
 
     public Student() {
-    }
-
-    public Student(String studentNumber, String firstName, String lastName, String nationalCode, List<Lesson> lessons) {
-        this.studentNumber = studentNumber;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nationalCode = nationalCode;
-        this.lessons = lessons;
     }
 
     public String getStudentNumber() {

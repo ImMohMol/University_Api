@@ -1,7 +1,7 @@
 package com.apa.university_api.repository;
 
 import com.apa.university_api.model.Student;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface IStudentRepository extends JpaRepository<Student, String> {
+public interface IStudentRepository extends PagingAndSortingRepository<Student, String> {
 }
