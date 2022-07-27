@@ -17,7 +17,7 @@ public class Student {
     @Column(unique = true, nullable = false, length = 10)
     private String nationalCode;
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "student_lessons", joinColumns = @JoinColumn(name = "lesson_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Lesson> lessons;
 

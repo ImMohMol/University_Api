@@ -10,21 +10,14 @@ public class Faculty {
     private Long id;
     @Column(nullable = false, unique = true)
     private String name;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Teacher> teachers;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Student> students;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Lesson> lessons;
 
     public Faculty() {
-    }
-
-    public Faculty(String name, List<Teacher> teachers, List<Student> students, List<Lesson> lessons) {
-        this.name = name;
-        this.teachers = teachers;
-        this.students = students;
-        this.lessons = lessons;
     }
 
     public void setId(Long id) {

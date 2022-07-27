@@ -14,7 +14,7 @@ public class Teacher {
     private String lastName;
     @Column(unique = true, nullable = false, length = 10)
     private String nationalCode;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Lesson> lessons;
     @OneToMany(fetch = FetchType.EAGER)
     private List<Student> students;

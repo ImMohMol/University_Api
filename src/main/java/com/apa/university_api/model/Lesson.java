@@ -10,9 +10,9 @@ public class Lesson {
     private Long id;
     private String name;
     private Integer grade;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Teacher teacher;
-    @ManyToMany(mappedBy = "lessons")
+    @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
     private List<Student> students;
 
     public Lesson() {
