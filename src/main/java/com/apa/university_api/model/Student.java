@@ -24,6 +24,14 @@ public class Student {
     public Student() {
     }
 
+    public Student(String studentNumber, String firstName, String lastName, String nationalCode, List<Lesson> lessons) {
+        this.studentNumber = studentNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nationalCode = nationalCode;
+        this.lessons = lessons;
+    }
+
     public String getStudentNumber() {
         return studentNumber;
     }
