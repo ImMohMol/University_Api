@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/student")
+@RequestMapping(path = "api/v1/students")
 public class StudentController {
     private final StudentService studentService;
 
@@ -21,7 +21,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<Response> add(@RequestBody Student student) {
         Response result = this.studentService.add(student);
         if (result.getResultCode() == 200)
@@ -29,7 +29,7 @@ public class StudentController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/lesson/add")
+    @PostMapping("/lessons")
     public ResponseEntity<Response> addLesson(@RequestBody SelectLessonDto selectLessonDto) {
         Response result = this.studentService.addLesson(selectLessonDto);
         if (result.getResultCode() == 200)

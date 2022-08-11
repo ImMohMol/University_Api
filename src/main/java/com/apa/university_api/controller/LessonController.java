@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/lesson")
+@RequestMapping(path = "api/v1/lessons")
 public class LessonController {
     private final LessonService lessonService;
 
@@ -20,7 +20,7 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "")
     public ResponseEntity<Response> add(@RequestBody LessonDto lesson) {
         Response result = this.lessonService.add(lesson);
         if (result.getResultCode() == 200)

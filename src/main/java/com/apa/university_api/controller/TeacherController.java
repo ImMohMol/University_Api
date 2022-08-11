@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "api/v1/teacher")
+@RequestMapping(path = "api/v1/teachers")
 public class TeacherController {
     private final TeacherService teacherService;
 
@@ -18,7 +18,7 @@ public class TeacherController {
     }
 
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "")
     public ResponseEntity<Response> add(@RequestBody Teacher teacher) {
         Response result = this.teacherService.add(teacher);
         if (result.getResultCode() == 200)

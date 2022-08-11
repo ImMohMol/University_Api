@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/faculty")
+@RequestMapping(path = "api/v1/faculties")
 public class FacultyController {
     private final FacultyService facultyService;
 
@@ -20,7 +20,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "")
     public ResponseEntity<Response> add(@RequestBody Faculty faculty) {
         Response result = this.facultyService.add(faculty);
         if (result.getResultCode() == 200)
