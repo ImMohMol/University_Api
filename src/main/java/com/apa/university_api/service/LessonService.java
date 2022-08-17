@@ -2,8 +2,8 @@ package com.apa.university_api.service;
 
 import com.apa.university_api.model.Lesson;
 import com.apa.university_api.model.Response;
-import com.apa.university_api.model.Teacher;
-import com.apa.university_api.model.dto.LessonDto;
+import com.apa.university_api.model.dto.lesson.LessonDTO;
+import com.apa.university_api.model.dto.mapper.LessonMapper;
 import com.apa.university_api.repository.ILessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,23 +13,20 @@ import java.util.Optional;
 @Service
 public class LessonService {
     private final ILessonRepository lessonRepository;
-    private final TeacherService teacherService;
+    private final LessonMapper lessonMapper;
 
     @Autowired
-    public LessonService(ILessonRepository lessonRepository, TeacherService teacherService) {
+    public LessonService(ILessonRepository lessonRepository, LessonMapper lessonMapper) {
         this.lessonRepository = lessonRepository;
-        this.teacherService = teacherService;
+        this.lessonMapper = lessonMapper;
     }
 
-    public Response add(LessonDto lesson) {
-        Optional<Lesson> isLessonExists = this.lessonRepository.findByName(lesson.getName());
+    public Response add(LessonDTO lessonDTO) {
+        Optional<Lesson> isLessonExists = this.lessonRepository.findByName(lessonDTO.getName());
         if (isLessonExists.isPresent())
             return new Response(400, "This lesson exists can't add it again!", null);
-        Teacher teacher = this.teacherService.get(lesson.getTeacherPersonalNumber());
-        if (teacher == null)
-            return new Response(400, "This teacher doesn't exists!", null);
-        Lesson savingLesson = new Lesson(lesson.getName(), lesson.getGrade(), teacher, lesson.getStudents());
-        Lesson savedLesson = this.lessonRepository.save(savingLesson);
+        Lesson lesson = this.lessonMapper.convertLessonDtoToLesson(lessonDTO);
+        Lesson savedLesson = this.lessonRepository.save(lesson);
         return new Response(200, "Lesson added successfully!", savedLesson);
     }
 

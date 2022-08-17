@@ -2,44 +2,41 @@ package com.apa.university_api.service;
 
 import com.apa.university_api.model.Faculty;
 import com.apa.university_api.model.Response;
+import com.apa.university_api.model.dto.faculty.FacultyDTO;
+import com.apa.university_api.model.dto.mapper.FacultyMapper;
 import com.apa.university_api.repository.IFacultyRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mockito;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class FacultyServiceTest {
-
-    @Mock
-    private IFacultyRepository facultyRepository;
-    @InjectMocks
-    private FacultyService facultyService;
-    private Faculty faculty;
-
-    @BeforeEach
-    public void setup() {
-        this.faculty = new Faculty();
-        faculty.setId(5L);
-        faculty.setName("Mechanic");
-        faculty.setStudents(null);
-        faculty.setTeachers(null);
-        faculty.setLessons(null);
-    }
+    private final IFacultyRepository facultyRepository = Mockito.mock(IFacultyRepository.class);
+    private final FacultyMapper facultyMapper = Mockito.mock(FacultyMapper.class);
+    private final FacultyService facultyService = new FacultyService(this.facultyRepository, this.facultyMapper);
 
     @Test
-    void add() {
-        given(this.facultyRepository.findByName(this.faculty.getName())).willReturn(Optional.of(new Faculty()));
-        Response result = this.facultyService.add(this.faculty);
+    void addFacultyUnitTest() {
+        when(this.facultyRepository.findByName(anyString())).thenReturn(Optional.empty());
+        when(this.facultyMapper.convertFacultyDtoToFaculty(any())).thenReturn(getFaculty());
+        Response result = this.facultyService.add(getFacultyDTO(getFaculty()));
         assertThat(result.getResultCode()).isEqualTo(200);
-        assertThat(result.getResultMessage()).isEqualTo("Faculty added successfully!");
+    }
+
+    private Faculty getFaculty() {
+        Faculty handler = new Faculty();
+        handler.setName("Computer");
+        return handler;
+    }
+
+    private FacultyDTO getFacultyDTO(Faculty faculty) {
+        FacultyDTO facultyDTO = new FacultyDTO();
+        facultyDTO.setName(faculty.getName());
+        return facultyDTO;
     }
 }

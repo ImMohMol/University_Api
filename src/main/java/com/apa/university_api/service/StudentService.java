@@ -3,7 +3,9 @@ package com.apa.university_api.service;
 import com.apa.university_api.model.Lesson;
 import com.apa.university_api.model.Response;
 import com.apa.university_api.model.Student;
-import com.apa.university_api.model.dto.SelectLessonDto;
+import com.apa.university_api.model.dto.student.SelectLessonDto;
+import com.apa.university_api.model.dto.mapper.StudentMapper;
+import com.apa.university_api.model.dto.student.StudentDTO;
 import com.apa.university_api.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +16,20 @@ import java.util.Optional;
 public class StudentService {
     private final IStudentRepository studentRepository;
     private final LessonService lessonService;
+    private final StudentMapper studentMapper;
 
     @Autowired
-    public StudentService(IStudentRepository studentRepository, LessonService lessonService) {
+    public StudentService(IStudentRepository studentRepository, LessonService lessonService, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
         this.lessonService = lessonService;
+        this.studentMapper = studentMapper;
     }
 
-    public Response add(Student student) {
-        Optional<Student> isStudentExists = this.studentRepository.findById(student.getStudentNumber());
+    public Response add(StudentDTO studentDTO) {
+        Optional<Student> isStudentExists = this.studentRepository.findById(studentDTO.getStudentNumber());
         if (isStudentExists.isPresent())
             return new Response(400, "This student exists can't add it again!", null);
+        Student student = this.studentMapper.convertStudentDtoToStudent(studentDTO);
         Student savedStudent = this.studentRepository.save(student);
         return new Response(200, "Student added successfully!", savedStudent);
     }

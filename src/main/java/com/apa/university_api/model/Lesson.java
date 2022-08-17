@@ -18,13 +18,6 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Lesson(String name, Integer grade, Teacher teacher, List<Student> students) {
-        this.name = name;
-        this.grade = grade;
-        this.teacher = teacher;
-        this.students = students;
-    }
-
     public Long getId() {
         return id;
     }
