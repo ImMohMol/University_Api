@@ -19,7 +19,6 @@ public class TeacherController {
         this.teacherService = teacherService;
     }
 
-
     @PostMapping(path = "")
     public ResponseEntity<Response> add(@RequestBody @Valid TeacherDTO teacher) {
         Response result = this.teacherService.add(teacher);
