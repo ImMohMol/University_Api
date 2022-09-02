@@ -7,6 +7,7 @@ import com.apa.university_api.model.dto.mapper.Mapper;
 import com.apa.university_api.model.dto.student.EnrollLessonDTO;
 import com.apa.university_api.model.dto.student.StudentDTO;
 import com.apa.university_api.repository.IStudentRepository;
+import com.apa.university_api.service.interfaces.ILessonService;
 import com.apa.university_api.service.interfaces.IStudentService;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,12 @@ import java.util.Optional;
 @Service
 public class StudentServiceImplementation implements IStudentService {
     private final IStudentRepository studentRepository;
+    private final ILessonService lessonService;
     private final Mapper mapper;
 
-    public StudentServiceImplementation(IStudentRepository studentRepository, Mapper mapper) {
+    public StudentServiceImplementation(IStudentRepository studentRepository, ILessonService lessonService, Mapper mapper) {
         this.studentRepository = studentRepository;
+        this.lessonService = lessonService;
         this.mapper = mapper;
     }
 
@@ -35,7 +38,7 @@ public class StudentServiceImplementation implements IStudentService {
     @Override
     public Response enrollLesson(EnrollLessonDTO enrollLessonDTO) {
         Optional<Student> student = this.studentRepository.findById(enrollLessonDTO.getStudentNumber());
-        Lesson lesson = this.lessonService.get(enrollLessonDTO.getLessonId());
+        Lesson lesson = this.lessonService.find(enrollLessonDTO.getLessonId());
         if (student.isEmpty())
             return new Response(400, "This student doesn't exists!", null);
         if (lesson == null)
