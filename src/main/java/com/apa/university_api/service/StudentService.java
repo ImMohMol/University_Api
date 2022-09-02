@@ -3,6 +3,7 @@ package com.apa.university_api.service;
 import com.apa.university_api.model.Lesson;
 import com.apa.university_api.model.Response;
 import com.apa.university_api.model.Student;
+import com.apa.university_api.model.dto.mapper.Mapper;
 import com.apa.university_api.model.dto.student.SelectLessonDto;
 import com.apa.university_api.model.dto.mapper.StudentMapper;
 import com.apa.university_api.model.dto.student.StudentDTO;
@@ -17,19 +18,22 @@ public class StudentService {
     private final IStudentRepository studentRepository;
     private final LessonService lessonService;
     private final StudentMapper studentMapper;
+    private final Mapper mapper;
 
     @Autowired
-    public StudentService(IStudentRepository studentRepository, LessonService lessonService, StudentMapper studentMapper) {
+    public StudentService(IStudentRepository studentRepository, LessonService lessonService, StudentMapper studentMapper, Mapper mapper) {
         this.studentRepository = studentRepository;
         this.lessonService = lessonService;
         this.studentMapper = studentMapper;
+        this.mapper = mapper;
     }
 
     public Response add(StudentDTO studentDTO) {
         Optional<Student> isStudentExists = this.studentRepository.findById(studentDTO.getStudentNumber());
         if (isStudentExists.isPresent())
             return new Response(400, "This student exists can't add it again!", null);
-        Student student = this.studentMapper.convertStudentDtoToStudent(studentDTO);
+//        Student student = this.studentMapper.convertStudentDtoToStudent(studentDTO);
+        Student student = this.mapper.convert(studentDTO, Student.class);
         Student savedStudent = this.studentRepository.save(student);
         return new Response(200, "Student added successfully!", savedStudent);
     }
