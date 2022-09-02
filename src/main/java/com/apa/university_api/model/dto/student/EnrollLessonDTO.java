@@ -4,7 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class SelectLessonDto {
+public class EnrollLessonDTO {
     @NotNull(message = "The value of parameter studentNumber can not be null")
     @Size(min = 7, max = 7, message = "StudentNumber must be 7 digits")
     private String studentNumber;

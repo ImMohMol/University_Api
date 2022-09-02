@@ -1,9 +1,10 @@
 package com.apa.university_api.controller;
 
 import com.apa.university_api.model.Response;
-import com.apa.university_api.model.dto.student.SelectLessonDto;
+import com.apa.university_api.model.dto.student.EnrollLessonDTO;
 import com.apa.university_api.model.dto.student.StudentDTO;
 import com.apa.university_api.service.StudentService;
+import com.apa.university_api.service.interfaces.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,9 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "api/v1/students")
 public class StudentController {
-    private final StudentService studentService;
+    private final IStudentService studentService;
 
-    @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(IStudentService studentService) {
         this.studentService = studentService;
     }
 
@@ -32,8 +32,8 @@ public class StudentController {
     }
 
     @PostMapping("/lessons")
-    public ResponseEntity<Response> addLesson(@RequestBody SelectLessonDto selectLessonDto) {
-        Response result = this.studentService.addLesson(selectLessonDto);
+    public ResponseEntity<Response> addLesson(@RequestBody EnrollLessonDTO enrollLessonDto) {
+        Response result = this.studentService.addLesson(enrollLessonDto);
         if (result.getResultCode() == 200)
             return ResponseEntity.ok(result);
         return ResponseEntity.badRequest().body(result);

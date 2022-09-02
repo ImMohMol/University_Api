@@ -3,7 +3,6 @@ package com.apa.university_api.service;
 import com.apa.university_api.model.Lesson;
 import com.apa.university_api.model.Response;
 import com.apa.university_api.model.dto.lesson.LessonDTO;
-import com.apa.university_api.model.dto.mapper.LessonMapper;
 import com.apa.university_api.model.dto.mapper.Mapper;
 import com.apa.university_api.repository.ILessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +13,11 @@ import java.util.Optional;
 @Service
 public class LessonService {
     private final ILessonRepository lessonRepository;
-    private final LessonMapper lessonMapper;
     private final Mapper mapper;
 
     @Autowired
-    public LessonService(ILessonRepository lessonRepository, LessonMapper lessonMapper, Mapper mapper) {
+    public LessonService(ILessonRepository lessonRepository, Mapper mapper) {
         this.lessonRepository = lessonRepository;
-        this.lessonMapper = lessonMapper;
         this.mapper = mapper;
     }
 
