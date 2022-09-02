@@ -2,6 +2,7 @@ package com.apa.university_api.service;
 
 import com.apa.university_api.model.Response;
 import com.apa.university_api.model.Teacher;
+import com.apa.university_api.model.dto.mapper.Mapper;
 import com.apa.university_api.model.dto.mapper.TeacherMapper;
 import com.apa.university_api.model.dto.teacher.TeacherDTO;
 import com.apa.university_api.repository.ITeacherRepository;
@@ -14,11 +15,13 @@ import java.util.Optional;
 public class TeacherService {
     private final ITeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
+    private final Mapper mapper;
 
     @Autowired
-    public TeacherService(ITeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+    public TeacherService(ITeacherRepository teacherRepository, TeacherMapper teacherMapper, Mapper mapper) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
+        this.mapper = mapper;
     }
 
     public Response add(TeacherDTO teacherDto) {
@@ -26,7 +29,7 @@ public class TeacherService {
         if (isTeacherExists.isPresent())
             return new Response(400, "This teacher exists can't add it again!", null);
         Teacher teacher = this.teacherMapper.convertTeacherDtoToTeacher(teacherDto);
-        Teacher savedTeacher = this.teacherRepository.save(teacher);
+        Teacher savedTeacher = this.mapper.convert(teacherDto, Teacher.class);
         return new Response(200, "Teacher added successfully!", savedTeacher);
     }
 

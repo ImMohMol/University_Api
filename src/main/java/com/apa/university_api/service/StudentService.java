@@ -5,7 +5,6 @@ import com.apa.university_api.model.Response;
 import com.apa.university_api.model.Student;
 import com.apa.university_api.model.dto.mapper.Mapper;
 import com.apa.university_api.model.dto.student.SelectLessonDto;
-import com.apa.university_api.model.dto.mapper.StudentMapper;
 import com.apa.university_api.model.dto.student.StudentDTO;
 import com.apa.university_api.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,12 @@ import java.util.Optional;
 public class StudentService {
     private final IStudentRepository studentRepository;
     private final LessonService lessonService;
-    private final StudentMapper studentMapper;
     private final Mapper mapper;
 
     @Autowired
-    public StudentService(IStudentRepository studentRepository, LessonService lessonService, StudentMapper studentMapper, Mapper mapper) {
+    public StudentService(IStudentRepository studentRepository, LessonService lessonService, Mapper mapper) {
         this.studentRepository = studentRepository;
         this.lessonService = lessonService;
-        this.studentMapper = studentMapper;
         this.mapper = mapper;
     }
 
@@ -32,7 +29,6 @@ public class StudentService {
         Optional<Student> isStudentExists = this.studentRepository.findById(studentDTO.getStudentNumber());
         if (isStudentExists.isPresent())
             return new Response(400, "This student exists can't add it again!", null);
-//        Student student = this.studentMapper.convertStudentDtoToStudent(studentDTO);
         Student student = this.mapper.convert(studentDTO, Student.class);
         Student savedStudent = this.studentRepository.save(student);
         return new Response(200, "Student added successfully!", savedStudent);
